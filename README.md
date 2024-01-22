@@ -1,24 +1,3 @@
-# vue3-todo
-
-## Project setup
-```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+# Vue 3 중급 - Composition API
+인스턴스 옵션 속성 방식과 Compositoin API 방식의 차이점을 알고
+Composition API로 TODO 기능 만들어보기
