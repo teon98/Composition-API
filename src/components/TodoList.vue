@@ -10,7 +10,7 @@
 
 <script>
 export default {
-    props: ['todoItems'],
+    props: ['todoItems', 'userId'],
     setup(props, context) {
         function removeTodo(item, index) {
             context.emit('remove', item, index);

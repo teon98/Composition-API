@@ -13,7 +13,7 @@
 import TodoHeader from '@/components/TodoHeader.vue';
 import TodoInput from './components/TodoInput.vue';
 import TodoList from './components/TodoList.vue';
-import { ref } from 'vue';
+import { onBeforeMount, onMounted, onUnmounted, ref } from 'vue';
 
 export default {
   components: {
@@ -37,8 +37,24 @@ export default {
         }
       return result;
     }
-  
-    todoItems.value = fetchTodos();
+
+    // 라이프 사이클 API와 같은 동작 - beforeCreate, created
+    console.log('1 : setup called');
+
+    //명시적인 라이프 사이클 API 적용
+    onBeforeMount(() => {
+      console.log('2 : onBeforeMount called');
+      todoItems.value = fetchTodos();
+    })
+
+    onMounted(() => {
+      console.log('3 : onMounted')
+    })
+
+    onUnmounted(() => {
+      //컴포넌트를 제거해야 호출된다.
+      console.log('4 : onUnmounted')
+    })
 
     function addTodoItem(todo) {
       todoItems.value.push(todo); //todoItems 배열에 todo추가
