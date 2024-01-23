@@ -9,6 +9,7 @@
 </template>
 
 <script>
+import { watch } from 'vue';
 export default {
     props: ['todoItems', 'userId'],
     setup(props, context) {
@@ -20,7 +21,10 @@ export default {
             let modifyText = prompt("수정할 내용을 입력하세요", item);
             context.emit('modify',item, modifyText, index);
         }
-        
+
+        watch(props.todoItems, (newValue) => {
+            console.log({ newValue });
+        })
         return { removeTodo, modifyTodo }
     }
 }
