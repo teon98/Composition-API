@@ -1,5 +1,5 @@
 <template>
-  <TodoHeader></TodoHeader>
+  <TodoHeader v-bind:appTitle="title"></TodoHeader>
   <!-- <TodoInput @하위컴포넌트 이벤트 이름="상위컴포넌트의 메서드 이름"></TodoInput>-->
   <TodoInput @add="addTodoItem"></TodoInput>
   <!-- <TodoList: 프롭스이름="상위 컴포넌트의 데이터이름"></TodoList:>-->
@@ -25,6 +25,7 @@ export default {
   setup() {
     //data
     const todoItems = ref([]);
+    const title = ref('할일 앱');
 
     //methods
     function fetchTodos() {
@@ -55,7 +56,7 @@ export default {
       localStorage.setItem(modifyText, modifyText);
     }
 
-    return { todoItems, addTodoItem, removeTodoItem, modifyTodoItem}
+    return { title, todoItems, addTodoItem, removeTodoItem, modifyTodoItem}
   },
   // methods: {
   //   removeTodoItem(item, index){
