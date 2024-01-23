@@ -2,83 +2,19 @@
 인스턴스 옵션 속성 방식과 Compositoin API 방식의 차이점을 알고, <br/>
 Composition API로 TODO 기능 만들어보기
 
-## 할 일 추가 기능
-```javascript
-<template>
-    <div>
-        <input type="text" v-model="todoInput">
-        <button @click="addTodo">추가</button>
-    </div>
-</template>
-
-<script>
-import { ref } from 'vue'
-export default {
-    setup(props, context) {
-        // data
-        const todoInput = ref('');
-
-        // methods
-        function addTodo() {
-            const todo = todoInput.value;
-            context.emit('add', todo);
-            clearTodo();
-        }
-
-        const clearTodo = () => todoInput.value = '';
-
-        return { todoInput , addTodo }
-    }
-}
-</script>
+## Custom Compoistion 함수로 setUp()함수 정리하기
+Composition API의 가장 큰 장점인 로직 재사용성을 이용하여 <br/>
+src폴더 밑에 hooks폴더를 생성 및 useTodo.js 파일을 생성하여<br/>
+기존 App.vue의 setup() 함수 안에 있던 메서드들을 옮겨보았다.<br/>
+이를 통해 App.vue의 setup()함수는 다음과 같이 간단해질 수 있다.
 ```
-```javascript
-function addTodoItem(todo) {
-  todoItems.value.push(todo); //todoItems 배열에 todo추가
-  localStorage.setItem(todo, todo);//localStorage에 todo 추가
-}
+  setup() {
+    //data
+    const title = ref('할일 앱');
+
+    const { todoItems, addTodoItem, removeTodoItem, modifyTodoItem } = useTodo();
+
+    return { title, todoItems, addTodoItem, removeTodoItem, modifyTodoItem };
+  },
+  
 ```
-
-## 할 일 삭제 & 수정 기능
-```javascript
-<template>
-  <ul>
-    <li v-for="(item, index) in todoItems" v-bind:key="index">
-        <span>{{ item }}</span>
-        <button @click="removeTodo(item, index)">삭제</button>
-        <button @click="modifyTodo(item, index)">수정</button>
-    </li>
-  </ul>
-</template>
-
-<script>
-export default {
-    props: ['todoItems'],
-    setup(props, context) {
-        function removeTodo(item, index) {
-            context.emit('remove', item, index);
-        }
-
-        function modifyTodo(item, index) {
-            let modifyText = prompt("수정할 내용을 입력하세요", item);
-            context.emit('modify',item, modifyText, index);
-        }
-        
-        return { removeTodo, modifyTodo }
-    }
-}
-</script>
-```
-```javascript
-function removeTodoItem(item, index) {
-  todoItems.value.splice(index, 1);
-  localStorage.removeItem(item);
-}
-
-function modifyTodoItem(item, modifyText, index) {
-  todoItems.value.splice(index, 1, modifyText);
-  localStorage.removeItem(item);
-  localStorage.setItem(modifyText, modifyText);
-}
-```
-수정 버튼을 누르면 prompt 창으로 수정할 값을 받아 수정되는 기능을 가볍게 추가하였다:)
