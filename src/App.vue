@@ -13,7 +13,8 @@
 import TodoHeader from '@/components/TodoHeader.vue';
 import TodoInput from './components/TodoInput.vue';
 import TodoList from './components/TodoList.vue';
-import { onBeforeMount, ref } from 'vue';
+import { ref } from 'vue';
+import { useTodo } from './hooks/useTodo';
 
 export default {
   components: {
@@ -24,57 +25,11 @@ export default {
   },
   setup() {
     //data
-    const todoItems = ref([]);
     const title = ref('할일 앱');
 
-    //methods
-    function fetchTodos() {
-      const result = [];
-        for (let i = 0; i < localStorage.length; i++) {
-          const todoItem = localStorage.key(i);
-          todoItems.value.push(todoItem);
-          result.push(todoItem);
-        }
-      return result;
-    }
+    const { todoItems, addTodoItem, removeTodoItem, modifyTodoItem } = useTodo();
 
-    // 라이프 사이클 API와 같은 동작 - beforeCreate, created
-    //console.log('1 : setup called');
-
-    //명시적인 라이프 사이클 API 적용
-    onBeforeMount(() => {
-      //console.log('2 : onBeforeMount called');
-      todoItems.value = fetchTodos();
-    })
-
-    /* watch 실습을 위해 주석 처리
-    onMounted(() => {
-      console.log('3 : onMounted')
-    })
-
-    onUnmounted(() => {
-      //컴포넌트를 제거해야 호출된다.
-      console.log('4 : onUnmounted')
-    })
-    */
-
-    function addTodoItem(todo) {
-      todoItems.value.push(todo); //todoItems 배열에 todo추가
-      localStorage.setItem(todo, todo);//localStorage에 todo 추가
-    }
-
-    function removeTodoItem(item, index) {
-      todoItems.value.splice(index, 1);
-      localStorage.removeItem(item);
-    }
-
-    function modifyTodoItem(item, modifyText, index) {
-      todoItems.value.splice(index, 1, modifyText);
-      localStorage.removeItem(item);
-      localStorage.setItem(modifyText, modifyText);
-    }
-
-    return { title, todoItems, addTodoItem, removeTodoItem, modifyTodoItem}
+    return { title, todoItems, addTodoItem, removeTodoItem, modifyTodoItem };
   },
   // methods: {
   //   removeTodoItem(item, index){
