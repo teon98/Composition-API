@@ -1,4 +1,9 @@
 # Vue 3 중급 - Composition API
+
+## 수강완료 인증!
+<img src="https://github.com/teon98/Composition-API/assets/49816869/18bc5b9c-5ac2-456c-a9cc-ee6ecc66eecc" width="50%"/>
+
+## 목표
 인스턴스 옵션 속성 방식과 Compositoin API 방식의 차이점을 알고, <br/>
 Composition API로 TODO 기능 만들어보기
 
