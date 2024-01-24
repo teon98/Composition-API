@@ -13,7 +13,7 @@
 import TodoHeader from '@/components/TodoHeader.vue';
 import TodoInput from './components/TodoInput.vue';
 import TodoList from './components/TodoList.vue';
-import { ref } from 'vue';
+import { onBeforeMount, ref } from 'vue';
 import { useTodo } from './hooks/useTodo';
 
 export default {
@@ -26,8 +26,13 @@ export default {
   setup() {
     //data
     const title = ref('할일 앱');
+    
+    const { todoItems, fetchTodos, addTodoItem, removeTodoItem, modifyTodoItem } = useTodo();
 
-    const { todoItems, addTodoItem, removeTodoItem, modifyTodoItem } = useTodo();
+    //라이프 사이클 API : 명확한 동작은 컴포넌트에서 확인되는 것이 좋다.
+    onBeforeMount(() => {
+      todoItems.value = fetchTodos();
+    });  
 
     return { title, todoItems, addTodoItem, removeTodoItem, modifyTodoItem };
   },

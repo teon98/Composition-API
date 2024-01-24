@@ -1,4 +1,4 @@
-import { onBeforeMount, ref } from "vue";
+import { ref } from "vue";
 
 function useTodo() {
   //data
@@ -14,11 +14,6 @@ function useTodo() {
     }
     return result;
     }
-    
-    onBeforeMount(() => {
-      //console.log('2 : onBeforeMount called');
-      todoItems.value = fetchTodos();
-    });  
     
     function addTodoItem(todo) {
       todoItems.value.push(todo); //todoItems 배열에 todo추가
@@ -36,7 +31,7 @@ function useTodo() {
       localStorage.setItem(modifyText, modifyText);
     }    
 
-    return { todoItems, addTodoItem, removeTodoItem, modifyTodoItem };
+    return { todoItems, fetchTodos, addTodoItem, removeTodoItem, modifyTodoItem };
 }
 
 export { useTodo };
